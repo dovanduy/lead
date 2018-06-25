@@ -1,0 +1,15 @@
+D:\source\obj\x86\Debug\AutoLead.DownloadProgress.resources
+D:\source\obj\x86\Debug\AutoLead.OfferOption.resources
+D:\source\obj\x86\Debug\AutoLead.Form1.resources
+D:\source\obj\x86\Debug\AutoLead.Properties.Resources.resources
+D:\source\obj\x86\Debug\AutoLeadnewsnam72.csproj.GenerateResource.cache
+D:\source\obj\x86\Debug\AutoLeadnewsnam72.csproj.CoreCompileInputs.cache
+D:\source\bin\Debug\AutoLead.exe
+D:\source\bin\Debug\AutoLead.pdb
+D:\source\bin\Debug\IPAddressControlLib.dll
+D:\source\bin\Debug\Renci.SshNet.dll
+D:\source\bin\Debug\Routrek.granados.dll
+D:\source\obj\x86\Debug\AutoLeadnewsnam72.csproj.CopyComplete
+D:\source\obj\x86\Debug\AutoLead.exe
+D:\source\obj\x86\Debug\AutoLead.pdb
+D:\source\obj\x86\Debug\AutoLeadnewsnam72.csprojAssemblyReference.cache
