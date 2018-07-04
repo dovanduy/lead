@@ -4371,8 +4371,8 @@ namespace AutoLead
 			catch (Exception exception)
 			{
 				MessageBox.Show("Can't conenct to server, please try again", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
-				Application.Exit();
-				Environment.Exit(0);
+				//Application.Exit();
+				//Environment.Exit(0);
 			}
 			if (productVersion == str.Replace("\r\n", ""))
 			{
