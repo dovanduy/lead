@@ -172,15 +172,6 @@ namespace AutoLead
         {
             bool isValid = false;
 
-            string country_code = Lumi.GetCountryCodeFromName(countryName);
-
-            if (country_code == null)
-            {
-                return isValid;
-            }
-
-            string username = "lum-customer-appsuper-zone-static-country-" + country_code.ToLower();
-
             //check if configuration file is existed or not
 
             string path_to_cc_ini =
@@ -194,35 +185,63 @@ namespace AutoLead
             {
                 File.Copy(path_to_cc_ini, config_copy_file);
             }
-
-            
-
-
-
-            Lumi.changeCCProxySetting(path_to_cc_ini, design_config_file, config_copy_file, username, ipforward, portforward);
-
-            string str2 = string.Concat(AppDomain.CurrentDomain.BaseDirectory, "CCProxy\\CCProxy.exe");
-            Process process = Process.Start(str2);
-            refproc = process;
-            while ((DateTime.Now - process.StartTime).Seconds < 1)
+            DateTime now = DateTime.Now;
+            int maxwait = 120;
+            while (true)
             {
-                Thread.Sleep(100);
-            }
-            IntPtr intPtr = Lumi.FindWindowInProcess(process, (string s) => s.StartsWith("CCProxy"));
-            while (intPtr == IntPtr.Zero)
-            {
-                intPtr = Lumi.FindWindowInProcess(process, (string s) => s.StartsWith("CCProxy"));
-                Thread.Sleep(100);
-            }
-            if (intPtr != IntPtr.Zero)
-            {
-                refproc = process;
-                isValid = true;
-            }
-            else
-            {
-                process.Kill();
-                isValid = false;
+                string country_code = null;
+                string username = null;
+
+                if ((DateTime.Now - now).TotalSeconds <= (double) maxwait)
+                {
+                    country_code = Lumi.GetCountryCodeFromName(countryName);
+
+                    if (country_code != null)
+                    {
+                        try
+                        {
+                            username = "lum-customer-appsuper-zone-static-country-" + country_code.ToLower();
+
+                            Lumi.changeCCProxySetting(path_to_cc_ini, design_config_file, config_copy_file, username, ipforward, portforward);
+
+                            string str2 = string.Concat(AppDomain.CurrentDomain.BaseDirectory, "CCProxy\\CCProxy.exe");
+                            Process process = Process.Start(str2);
+                            refproc = process;
+                            while ((DateTime.Now - process.StartTime).Seconds < 1)
+                            {
+                                Thread.Sleep(100);
+                            }
+                            IntPtr intPtr = Lumi.FindWindowInProcess(process, (string s) => s.StartsWith("CCProxy"));
+                            while (intPtr == IntPtr.Zero)
+                            {
+                                intPtr = Lumi.FindWindowInProcess(process, (string s) => s.StartsWith("CCProxy"));
+                                Thread.Sleep(100);
+                            }
+                            if (intPtr != IntPtr.Zero)
+                            {
+                                refproc = process;
+                                isValid = true;
+                            }
+                            else
+                            {
+                                process.Kill();
+                                isValid = false;
+                            }
+
+                            
+                        }
+                        catch (Exception e)
+                        {
+                            
+                        }
+                        break;
+
+                    }
+                }
+                else
+                {
+                    break;
+                }
             }
 
             return isValid;

@@ -69,7 +69,23 @@ namespace AutoLead
                     if (!Lumi.fake_proxy(str, this.ipAddressControl1.Text, this.numericUpDown1.Value.ToString(),
                         ref this.bitproc))
                     {
-                        this.label1.Invoke(new MethodInvoker(() => this.label1.Text = "Failed To fake"));
+                        MessageBox.Show("Failed To change proxy with this Luminatio Account",
+                            Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                        this.label1.Invoke(new MethodInvoker(() => this.label1.Text = "Failed To change Luminatio"));
+                        this.button7.Invoke(new MethodInvoker(() =>
+                        {
+                            if (this.button7.Text == "STOP")
+                            {
+                                this.button7_Click(null, null);
+                            }
+
+                            if (this.button19.Text == "STOP")
+                            {
+                                this.button19_Click(null, null);
+                            }
+                        }));
+                        this.button20.Invoke(new MethodInvoker(() => this.button20.Enabled = true));
+                        return;
                     }
                     else
                     {
