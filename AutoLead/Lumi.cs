@@ -174,6 +174,13 @@ namespace AutoLead
 
             string country_code = Lumi.GetCountryCodeFromName(countryName);
 
+            if (country_code == null)
+            {
+                return isValid;
+            }
+
+            string username = "lum-customer-appsuper-zone-static-country-" + country_code.ToLower();
+
             //check if configuration file is existed or not
 
             string path_to_cc_ini =
@@ -188,7 +195,7 @@ namespace AutoLead
                 File.Copy(path_to_cc_ini, config_copy_file);
             }
 
-            string username = "lum-customer-appsuper-zone-static-country-" + country_code.ToLower();
+            
 
 
 

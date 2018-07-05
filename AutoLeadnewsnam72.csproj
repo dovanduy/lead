@@ -53,6 +53,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutoLead\AutoRRSForm1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AutoLead\ImportLoadSSHForm1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AutoLead\PartialForm1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AutoLead\QuanForm1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AutoLead\ThreadChangeIpForm1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AutoLead\VariablesForm1.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <AutoGen>false</AutoGen>
       <DesignTimeSharedInput>false</DesignTimeSharedInput>
