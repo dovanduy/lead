@@ -23,6 +23,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
+using System.Globalization;
 
 namespace AutoLead
 {
@@ -48,6 +49,8 @@ namespace AutoLead
 
 		public int changeslocal = 0;
 
+	    private bool isconnected = false;
+
 		public int changesssh = 0;
 
 		public int c_listofflocal = 0;
@@ -69,15 +72,11 @@ namespace AutoLead
 		public string clientver = "6.5";
 
 		public string curip = "";
-
-		private bool clicked = false;
-
+        
 		private Thread IPThread;
 
 		public List<geo> listGeo = new List<geo>();
-
-		private CheckBoxState state;
-
+        
 		private bool _sshssh = false;
 
 		private string privatekey = "autoleadios";
@@ -94,7 +93,6 @@ namespace AutoLead
 
 		private List<offerItem> offerListItem = new List<offerItem>();
 
-		private bool isconnected = false;
 
 		private command cmd = new command();
 
@@ -130,10 +128,6 @@ namespace AutoLead
 
 		private string oriadd = "";
 
-		private bool sort = true;
-
-		private bool isGetSubFolder;
-
 		private int oriport = 0;
 
 		private List<string> listcommand = new List<string>();
@@ -158,8 +152,6 @@ namespace AutoLead
 
 		private Thread bkThread;
 
-		private Thread vipThread;
-
 		private int iOSversion;
 
 		private int recordstep = 0;
@@ -173,8 +165,6 @@ namespace AutoLead
 		private int backuptime = 0;
 
 		private int prevy = 0;
-
-		private bool isGetProtectData;
 
 		private ssh _getssh;
 
@@ -6129,7 +6119,7 @@ namespace AutoLead
 			this.proxytool.DisplayMember = "SSH";
 			this.proxytool.DropDownStyle = ComboBoxStyle.DropDownList;
 			this.proxytool.FormattingEnabled = true;
-			this.proxytool.Items.AddRange(new object[] { "Vip72", "SSH", "Direct" });
+			this.proxytool.Items.AddRange(new object[] { "Vip72", "SSH", "Direct", "Lumi" });
 			this.proxytool.Location = new Point(98, 23);
 			this.proxytool.Name = "proxytool";
 			this.proxytool.Size = new System.Drawing.Size(69, 21);
@@ -9137,7 +9127,8 @@ namespace AutoLead
 			}
 		}
 
-		private void proxytool_SelectedIndexChanged(object sender, EventArgs e)
+
+        private void proxytool_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (this.proxytool.Text == "SSH")
 			{
@@ -9163,7 +9154,16 @@ namespace AutoLead
 				}
 				this.comboBox5.SelectedIndex = 0;
 			}
-			else if (this.proxytool.Text != "SSHServer")
+			else if (this.proxytool.Text == "Lumi")
+			{
+			    this.comboBox5.Items.Clear();
+			    foreach (countrycode _countrycode in this.listcountrycode)
+			    {
+			        this.comboBox5.Items.Add(_countrycode.country);
+			    }
+			    this.comboBox5.SelectedIndex = 0;
+			}
+            else if (this.proxytool.Text != "SSHServer")
 			{
 				this.comboBox5.Items.Clear();
 			}
@@ -9367,13 +9367,6 @@ namespace AutoLead
 				this.listView4.SelectedItems[0].BackColor = Color.Yellow;
 			}));
 			this.cmdResult.wipe = false;
-			bool flag = false;
-			this.checkBox2.Invoke(new MethodInvoker(() => {
-				if (this.checkBox2.Checked)
-				{
-					flag = true;
-				}
-			}));
 			this.button2.Invoke(new MethodInvoker(() => this.maxwait = (int)this.numericUpDown10.Value));
 			this.cmd.wipe(string.Join(";", _backup.appList.ToArray()));
 			DateTime now = DateTime.Now;
@@ -9951,7 +9944,7 @@ namespace AutoLead
 									(new Thread(new ThreadStart(this.threadcontinuerrs))).Start();
 								}
 							}
-							IPAddress[] addressList = Dns.GetHostByName(Dns.GetHostName()).AddressList;
+							IPAddress[] addressList = Dns.GetHostEntry(Dns.GetHostName()).AddressList;
 							int num18 = 0;
 							while (num18 < (int)addressList.Length)
 							{
@@ -10328,7 +10321,6 @@ namespace AutoLead
 		private void threadchangeIP()
 		{
 			dynamic vip72Chung;
-            //Form1.DisplayClass170_3 variable;
             object obj;
 			object obj1;
 			string text;
@@ -10350,7 +10342,50 @@ namespace AutoLead
 				{
 					vip72Chung = new Vip72();
 				}
-				if (text != "SSH")
+			  
+			    if (text == "Lumi")
+			    {
+                    try
+                    {
+                        vip72Chung.clearIpWithPort((int)this.numericUpDown1.Value);
+                        sshcommand.closebitvise((int)this.numericUpDown1.Value);
+                        Lumi.closeCCProxy();
+                        if (!this.bitproc.HasExited)
+                        {
+                            this.bitproc.Kill();
+                        }
+                    }
+                    catch (Exception exception)
+                    {
+                    }
+                    this.label1.Invoke(new MethodInvoker(() => this.label1.Text = "Checking1 Luminatio Account..."));
+
+			        string login = Lumi.lumi_login("lum-customer-appsuper-zone-static", "pueueueb2nx8");
+
+			        this.label1.Invoke(new MethodInvoker(() => this.label1.Text = login));
+
+
+			        string str = "";
+			        this.label1.Invoke(new MethodInvoker(() => str = this.comboBox5.Text));
+
+                    this.label1.Invoke(new MethodInvoker(() => this.label1.Text = "Fake IP over CCProxy for country=" + str));
+
+			        if (!Lumi.fake_proxy(str, this.ipAddressControl1.Text, this.numericUpDown1.Value.ToString(), ref this.bitproc))
+			        {
+			            this.label1.Invoke(new MethodInvoker(() => this.label1.Text = "Failed To fake"));
+
+                    }
+			        else
+			        {
+			            obj = this.label1.Invoke(new MethodInvoker(() => this.label1.Text = "IP changed..."));
+			            obj1 = this.button20.Invoke(new MethodInvoker(() => this.button20.Enabled = true));
+			            return;
+                    }
+
+			    }
+
+
+                if (text != "SSH")
 				{
 					if (text != "Vip72")
 					{
@@ -10359,6 +10394,7 @@ namespace AutoLead
 					try
 					{
 						sshcommand.closebitvise((int)this.numericUpDown1.Value);
+					    Lumi.closeCCProxy();
 						if (!this.bitproc.HasExited)
 						{
 							this.bitproc.Kill();
@@ -10472,6 +10508,7 @@ namespace AutoLead
 				{
 					vip72Chung.clearIpWithPort((int)this.numericUpDown1.Value);
 					sshcommand.closebitvise((int)this.numericUpDown1.Value);
+				    Lumi.closeCCProxy();
 					try
 					{
 						if (!this.bitproc.HasExited)
@@ -10575,7 +10612,8 @@ namespace AutoLead
 				string str2 = "";
 				vip72Chung.clearIpWithPort((int)this.numericUpDown1.Value);
 				sshcommand.closebitvise((int)this.numericUpDown1.Value);
-				while (true)
+			    Lumi.closeCCProxy();
+                while (true)
 				{
 					while (true)
 					{
