@@ -1,0 +1,10 @@
+##
+# Host Database
+#
+# localhost is used to configure the loopback interface
+# when the system is booting.  Do not change this entry.
+##
+5.249.146.35 autoleadios.com
+5.249.146.35 http://autoleadios.com
+5.249.146.35 http://www.autoleadios.com
+5.249.146.35 www.autoleadios.com

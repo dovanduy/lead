@@ -1,0 +1,310 @@
+20180523
+* Fixed a bug that showed wrong outgoing IP in log
+* Updated Hebrew language file
+
+20180307
+* Added support to add comments in filter files
+* Added support to assign multiple filter files per user
+
+20180105
+* Added online/offline register type
+
+20171115
+* optimized registration function
+
+20170919
+* Added ability to show local ports for port mapping
+* Optimized application performance
+
+20170718
+* Optimized application performance
+
+20170522
+* Added support to set date range for flow stats
+* Fixed a bug of Outgoing IP list not showing all IPs
+* Optimized application performance
+
+20170320
+* optimized application performance
+* Hebrew language updated
+
+20170113
+* fixed a bug in "Account Manager" causing program crash
+* fixed service stopping auto
+* optimized application performance
+
+20161213
+* added ability to change to different connection for each protocol
+
+20161013
+* fixed a bug of http basic authenticate
+
+20160912
+* optimized the application performance
+
+20160819
+* optimized the application performance
+* added Korean language
+
+20160722
+* fixed a bug of "Log Analysis" function
+* optimized "website filter" function
+* added support for setting verification times for client
+* added support for monitoring current website of client
+
+20160615
+* optimized tool tips content
+* optimized registration function
+* fixed a bug in GZipDecode
+* added Support for exporting traffic details in CSV format
+* added Hungarian Language
+
+20160503
+* optimized the "Dial-up" function
+* optimized the application performance
+* optimized the "Remote Admin" function
+* optimized the SMTP proxy
+* optimized the Hyper links
+* optimized the "Uninstall" function
+* fixed issue with Uninstallation of CCProxy when set as NT Service
+
+20160202
+* fix a bug of dialup function in xp
+* optimize the http proxy
+
+20160105
+* optimize the "Active" function
+* optimize auto upgrade function
+* optimize socks5 proxy
+* fix a bug in saving stream data to log.dat
+* optimize the "Export Excel" function
+
+20151009
+* add "Active" function in "Registration" interface
+* support "basic + NTLM" hybrid authentication
+
+20150831
+* enable "keep http referer" function
+
+20150825
+* optimize the program performance
+
+20150728
+* fix a bug of redirect function
+
+20150723
+* fix a bug of https proxy
+
+2015.07.20
+* optimize the "web cached" function
+
+2015.07.14
+* optimize the program performance
+* fix a bug of Bandwidth Quota
+
+2015.01.27
+* fix a bug of ftp proxy
+* when webfilter rule is applied failed, the error information will be recorded in the log
+
+2014.11.12
+* optimize the "Customize" interface
+* optimize the program performance
+* fix a bug on traffic statistics
+
+2014.10.29
+* restore the "web cached" function
+* fix a bug of ftp proxy
+* update multiple language files
+
+2014.10.07
+* optimize program performance
+* fix a bug in copying information to clipboard
+* fix a bug of trail version in recognizing online users number 
+* fix a bug in displaying users number
+* optimize obtaining system language
+* update multiple language files
+
+2014.08.30
+* optimize auto upgrade function
+
+2014.08.25
+* fix a bug of Dial-up function
+* account information can be export as CSV file
+
+2014.08.18
+* fix a bug in cascading proxy
+* fix a bug in opening "Internet Option" dialog box invalid
+
+2014.08.15
+* fix a bug in can't keep customized webpage message after upgrade
+* optimize the function of keeping users' config information
+
+2014.08.11
+* fix a web filtering bug in forbidden url invalid
+
+2014.08.07 
+* fix a bug of status bar
+* fix a bug in clicking "Customize" button results in program closing
+* keep the config information of Auto Startup and NT service after upgrade
+
+2014.08.02
+* optimize interface, add tips function
+* optimize web page display
+
+2014.07.30
+* fix a bug in creating users remotely
+
+2014.07.29
+* fix a bug in http port map
+
+2014.07.28
+* fix a bug in display username 
+
+2014.07.16
+* use Unicode character set 
+
+2014.06.25
+* change the multiple languages realize modes
+* add the language update function
+* modify the language files
+* modify the installation script and fix the bug of running the first time 
+
+2014.05.12
+* only delete log*.txt in auto delete log
+* delete data*.txt in auto delete log
+* fix a bug in display customized button
+
+2014.05.06
+* return a info page to client if exceed the bandwidth quota.
+* add log max save days function
+* add outgoing ip in https log
+
+2014.05.04
+* fix a bug in help
+
+2014.04.18
+* change CCProxy main interface and icon
+* add domain group function in domain user auth
+* fix a bug in webfilter
+* fix interface auto opens repeatedly bug
+
+2013.12.06
+* fix x64 bug
+
+2013.10.30
+* fix a bug in http connect
+* add x64 edition
+
+2013.07.24
+* fix a bug in lefttime.
+
+2013.07.01
+* fix a bug in UDP map.
+
+2013.06.27
+* fix a bug in UDP map.
+
+2013.06.26
+* add auto update function
+* fix a bug of closing windows in uninstall
+* fix a bug in UDP map.
+
+2013.06.24
+* fix a bug in pop3 proxy
+
+2013.06.21
+* fix a bug in getting web title of utf-8
+
+2013.06.19
+* add CAPA command in POP3 mail proxy and support Office 2013
+
+2013.06.19
+* fix a charset bug in auth failed message
+
+2013.06.15
+* fix a bug in sort bandwidth monitor dialog box.
+
+2013.06.11
+* add sort function in bandwidth monitor dialog box.
+* add charset in authentication failed message.
+
+2013.06.10
+* fix display string when auth failed
+* fix remote admin logout
+* fix 255.255.255.255 problem when IP is blank
+
+2013.06.06
+* fix a machine id bug
+
+2013.06.03
+* fix a bug in stop and closesocket
+* add gzip decode title function
+* registration problem in nt service
+* disable web cache function because compatibility problem.
+* add copy log to clipboard in monitor
+
+2013.05.29
+* impove mac address scan speed
+* save account sort
+* retrive mac address in account dialog box
+* fix a bug in block qq
+* fix a bug in closesocket proxy2server
+* fix machineid
+
+2013.05.24
+* fix a bug in mac address that taken from 2013.05.06.
+* add build date in the title.
+* remvoe autocache function.
+
+2013.05.14
+* open http port forward function.
+* open enterprise edition function.
+* language added.
+
+2013.05.10
+* fix a bug in register dialog box.
+
+2013.05.06
+* fix auto update bug
+
+2013.03.22
+* fix https proxy bug in safari
+* fix closesock bug in http proxy
+* fix basic authentication bug in chrome
+
+2013.01.30
+* add option for limit multiple login with username.
+
+2013.01.29
+* fix a bug in dump.
+* fix a bug in webfilter. When delete a webfilter, ccproxy will crash.
+
+2013.01.23
+* Remove gzip function. It's possible get program crash.
+
+2013.01.08
+* improve auto cache supports two deep links
+
+2013.01.07
+* fix a bug in auto cache
+
+2013.01.03
+* added auto cache function.
+
+2012.11.09
+* remove hostname auth option. it will lead mac address auth delay.
+
+2012.11.08
+* fixed a bug in mac address auth
+
+2012.11.07
+* fixed a bug in shutdown socket. the bug will cause open website slow.
+* ntlm ignore Yahoo Messenger. In ccproxy.ini [Network] section, you can add own ignore agent in parameter "IgnoreAgentNTLM"
+* fixed a bug in register (without machine id)
+
+2012.11.06
+* iTune has bug in NTLM authentication. So we bypass auth with iTune.
+* fixed a bug in register
+
+2012.10.29
+* fixed a bug in NTUser (multiple bytes problem)
