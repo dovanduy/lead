@@ -72,6 +72,7 @@ namespace AutoLead
                             }
                             else
                             {
+                                this.curip = Lumi.getCurrentLumiIP();
                                 break;
                             }
 
@@ -723,6 +724,7 @@ namespace AutoLead
                                                                 }
                                                                 else
                                                                 {
+                                                                    this.curip = Lumi.getCurrentLumiIP();
                                                                     break;
                                                                 }
 

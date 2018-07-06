@@ -238,27 +238,34 @@ namespace AutoLead
 
         
 
-        public static bool Lumi_login(string username, string password)
+        public static string getCurrentLumiIP()
         {
-            bool isValid = false;
+
+            DateTime now = DateTime.Now;
+            int maxwait = 120;
             string response = null;
-
-            try
+            while (true)
             {
+                if ((DateTime.Now - now).TotalSeconds <= (double) maxwait)
+                {
 
-                var client = new WebClient();
-                client.Proxy = new WebProxy("zproxy.lum-superproxy.io:22225");
-                client.Proxy.Credentials = new NetworkCredential(username, password);
-                 response = client.DownloadString("http://lumtest.com/myip.json");
-                isValid = true;
+                    try
+                    {
+                        var strUrl = "http://lumtest.com/myip.json";
+                        var wc = new WebClient();
+                        var strJson = wc.DownloadString(strUrl);
+                        var json = JObject.Parse(strJson);
+                        response = json["ip"].ToString();
+                        break;
 
+                    }
+                    catch (Exception e)
+                    {
+                        
+                    }
+                }
             }
-            catch (Exception e)
-            {
-                
-            }
-
-            return isValid;
+            return response;
         }
 
         public static IntPtr FindWindowInProcess(Process process, Func<string, bool> compareTitle)
