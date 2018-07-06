@@ -53,13 +53,7 @@ namespace AutoLead
                     {
                     }
 
-                    this.label1.Invoke(new MethodInvoker(() => this.label1.Text = "Checking1 Luminatio Account..."));
-
-                    string login = Lumi.lumi_login("lum-customer-appsuper-zone-static", "pueueueb2nx8");
-
-                    this.label1.Invoke(new MethodInvoker(() => this.label1.Text = login));
-
-
+                    this.label1.Invoke(new MethodInvoker(() => this.label1.Text = "Checking Luminatio Account..."));
                     string str = "";
                     this.label1.Invoke(new MethodInvoker(() => str = this.comboBox5.Text));
 

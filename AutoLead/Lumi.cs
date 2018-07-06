@@ -12,6 +12,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Resources;
 using System.Globalization;
+using System.Windows.Forms;
 using Newtonsoft.Json.Linq;
 
 
@@ -24,99 +25,6 @@ namespace AutoLead
         {
         }
 
-        public static void changeCCProxySetting(string cc_path, string design_path, string config_copy_path, string username, string ipforward, string portforward)
-        {
-            File.Copy(design_path, cc_path, true);
-
-            string reg_code = null;
-            string reg_user = null;
-
-            string lumi_pass = null;
-
-            var configCopyLines = File.ReadAllLines(config_copy_path);
-
-
-
-            foreach (var configLine in configCopyLines)
-            {
-                if (configLine.StartsWith("RegCode="))
-                {
-                    reg_code = configLine;
-
-                }
-
-                if (configLine.StartsWith("UserName="))
-                {
-                    reg_user = configLine;
-
-                }
-
-                if (configLine.StartsWith("[Port]"))
-                {
-                    break;
-                }
-
-            }
-
-            foreach (var configLine in configCopyLines)
-            {
-                if (configLine.StartsWith("Password="))
-                {
-                    lumi_pass = configLine;
-
-                }
-
-                if (configLine.StartsWith("[StringEx]"))
-                {
-                    break;
-                }
-
-            }
-
-
-
-
-            var originalLines = File.ReadAllLines(cc_path);
-
-            var updatedLines = new List<string>();
-            foreach (var line in originalLines)
-            {
-                var copyLine = line;
-                if (line.Contains("#REG_CODE#"))
-                {
-                    copyLine = reg_code;
-                }
-
-                if (line.Contains("#REG_USER#"))
-                {
-                    copyLine = reg_user;
-                }
-
-                if (line.Contains("#SOCK_FORWARD_IP#"))
-                {
-                    copyLine = "SOCKS=" + ipforward;
-                }
-
-                if (line.Contains("#SOCK_FORWARD_PORT#"))
-                {
-                    copyLine = "SOCKS=" + portforward;
-                }
-
-                if (line.Contains("#LUMI_USER#"))
-                {
-                    copyLine = "UserName=" + username;
-                }
-
-                if (line.Contains("#LUMI_PASS#"))
-                {
-                    copyLine = lumi_pass;
-                }
-
-                updatedLines.Add(copyLine);
-            }
-
-            File.WriteAllLines(cc_path, updatedLines);
-        }
 
         public static void closeCCProxy()
         {
@@ -174,35 +82,116 @@ namespace AutoLead
 
             //check if configuration file is existed or not
 
-            string path_to_cc_ini =
-                string.Concat(AppDomain.CurrentDomain.BaseDirectory, "CCProxy\\", "CCProxy", ".ini");
 
-            string config_copy_file = string.Concat(AppDomain.CurrentDomain.BaseDirectory, "CCProxyProfile\\", "CCProxy_copy", ".ini");
-            string design_config_file = string.Concat(AppDomain.CurrentDomain.BaseDirectory, "CCProxyProfile\\", "CCProxy_design", ".ini");
-
-
-            if (!File.Exists(config_copy_file))
-            {
-                File.Copy(path_to_cc_ini, config_copy_file);
-            }
             DateTime now = DateTime.Now;
             int maxwait = 120;
+            string pathToCcProxyIni = string.Concat(AppDomain.CurrentDomain.BaseDirectory, "CCProxy\\", "CCProxy", ".ini");
+            string pathToCcProxyDesignIni = string.Concat(AppDomain.CurrentDomain.BaseDirectory, "CCProxyProfile\\", "CCProxy_design", ".ini");
             while (true)
             {
-                string country_code = null;
-                string username = null;
 
                 if ((DateTime.Now - now).TotalSeconds <= (double) maxwait)
                 {
-                    country_code = Lumi.GetCountryCodeFromName(countryName);
+                    var countryCode = Lumi.GetCountryCodeFromName(countryName);
 
-                    if (country_code != null)
+                    if (countryCode != null)
                     {
                         try
                         {
-                            username = "lum-customer-appsuper-zone-static-country-" + country_code.ToLower();
+                            var configCopyLines = File.ReadAllLines(pathToCcProxyIni);
 
-                            Lumi.changeCCProxySetting(path_to_cc_ini, design_config_file, config_copy_file, username, ipforward, portforward);
+                            // check if password for luminatio is fill
+
+                            string lumiPass = null;
+                            string lumiUser = null;
+
+
+                            foreach (var configLine in configCopyLines)
+                            {
+
+                                if (configLine.StartsWith("Password="))
+                                {
+                                    lumiPass = configLine;
+
+                                }
+
+                                if (configLine.StartsWith("UserName="))
+                                {
+                                    lumiUser = configLine;
+
+                                }
+
+                                if (configLine.StartsWith("[StringEx]"))
+                                {
+                                    break;
+                                }
+
+                            }
+
+                            if ((lumiPass == "Password=") || (lumiUser == "UserName=") || (lumiUser == null) || (lumiPass == null))
+                            {
+                                MessageBox.Show("Please Open CCProxy and Fill Luminatio Username and Password!", Application.ProductName, MessageBoxButtons.OK,
+                                    MessageBoxIcon.Hand);
+                                break;
+                            }
+
+                         
+                            //allready filled password.
+                           
+
+                            //change username to with CountryCode.
+
+                            if (lumiUser.Contains("country-"))
+                            {
+                                lumiUser = lumiUser.Substring(lumiUser.Length - 2);
+                                lumiUser += countryCode.ToLower();
+                            }
+                            else 
+                            {
+                                MessageBox.Show("Luminati Username Must Contain '-country-'!", Application.ProductName, MessageBoxButtons.OK,
+                                    MessageBoxIcon.Hand);
+                                break;
+                            }
+
+
+                            //replace 
+
+                            File.Copy(pathToCcProxyDesignIni, pathToCcProxyIni, true);
+
+                            // fill value to new ini file.
+
+                            var originalLines = File.ReadAllLines(pathToCcProxyIni);
+
+                            var updatedLines = new List<string>();
+                            foreach (var line in originalLines)
+                            {
+                                var copyLine = line;
+
+                                if (line.Contains("#SOCK_FORWARD_IP#"))
+                                {
+                                    copyLine = "SOCKS=" + ipforward;
+                                }
+
+                                if (line.Contains("#SOCK_FORWARD_PORT#"))
+                                {
+                                    copyLine = "SOCKS=" + portforward;
+                                }
+
+                                if (line.Contains("#LUMI_USER#"))
+                                {
+                                    copyLine = lumiUser;
+                                }
+
+                                if (line.Contains("#LUMI_PASS#"))
+                                {
+                                    copyLine = lumiPass;
+                                }
+
+                                updatedLines.Add(copyLine);
+                            }
+
+                            File.WriteAllLines(pathToCcProxyIni, updatedLines);
+
 
                             string str2 = string.Concat(AppDomain.CurrentDomain.BaseDirectory, "CCProxy\\CCProxy.exe");
                             Process process = Process.Start(str2);
@@ -250,21 +239,27 @@ namespace AutoLead
 
         
 
-        public static string lumi_login(string username, string password)
+        public static bool Lumi_login(string username, string password)
         {
+            bool isValid = false;
+            string response = null;
+
             try
             {
 
                 var client = new WebClient();
                 client.Proxy = new WebProxy("zproxy.lum-superproxy.io:22225");
                 client.Proxy.Credentials = new NetworkCredential(username, password);
-                return client.DownloadString("http://lumtest.com/myip.json");
+                 response = client.DownloadString("http://lumtest.com/myip.json");
+                isValid = true;
 
             }
             catch (Exception e)
             {
-                return e.ToString();
+                
             }
+
+            return isValid;
         }
 
         public static IntPtr FindWindowInProcess(Process process, Func<string, bool> compareTitle)
