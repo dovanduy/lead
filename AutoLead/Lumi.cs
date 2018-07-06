@@ -143,8 +143,7 @@ namespace AutoLead
 
                             if (lumiUser.Contains("country-"))
                             {
-                                lumiUser = lumiUser.Substring(lumiUser.Length - 2);
-                                lumiUser += countryCode.ToLower();
+                                lumiUser = lumiUser.Substring(0, lumiUser.Length - 2) + countryCode.ToLower();
                             }
                             else 
                             {
