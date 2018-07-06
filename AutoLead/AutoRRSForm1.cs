@@ -148,10 +148,57 @@ namespace AutoLead
                             }
 
                             vip72Chung.waitiotherVIP72();
-                            if (text == "SSH")
+
+                            if (text == "Lumi")
+                            {
+                                try
+                                {
+                                    vip72Chung.clearIpWithPort((int)this.numericUpDown1.Value);
+                                    sshcommand.closebitvise((int)this.numericUpDown1.Value);
+                                    Lumi.closeCCProxy();
+                                    if (!this.bitproc.HasExited)
+                                    {
+                                        this.bitproc.Kill();
+                                    }
+                                }
+                                catch (Exception exception)
+                                {
+                                }
+
+                                while (true)
+                                {
+                                    this.label1.Invoke(new MethodInvoker(() => this.label1.Text = "Checking Luminatio Account..."));
+                                    string str11 = "";
+                                    this.label1.Invoke(new MethodInvoker(() => str11 = this.comboBox5.Text));
+
+                                    this.label1.Invoke(new MethodInvoker(() =>
+                                        this.label1.Text = "Fake IP over CCProxy for country=" + str11));
+
+                                    if (!Lumi.fake_proxy(str11, this.ipAddressControl1.Text, this.numericUpDown1.Value.ToString(),
+                                        ref this.bitproc))
+                                    {
+                                        MessageBox.Show("Failed To change proxy with this Luminatio Account",
+                                            Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                                        this.label1.Invoke(new MethodInvoker(() => this.label1.Text = "Failed To change Luminatio"));
+                                        
+                                        this.label1.Invoke(new MethodInvoker(() => this.button7_Click(null, null)));
+
+                                        return;
+                                    }
+                                    else
+                                    {
+                                        break;
+                                    }
+                                }
+
+                                goto Label2;
+
+
+                            } else if (text == "SSH")
                             {
                                 vip72Chung.clearIpWithPort((int) this.numericUpDown1.Value);
                                 sshcommand.closebitvise((int) this.numericUpDown1.Value);
+                                Lumi.closeCCProxy();
                                 try
                                 {
                                     if (!this.bitproc.HasExited)
@@ -261,6 +308,7 @@ namespace AutoLead
                                     string str2 = "";
                                     vip72Chung.clearIpWithPort((int) this.numericUpDown1.Value);
                                     sshcommand.closebitvise((int) this.numericUpDown1.Value);
+                                    Lumi.closeCCProxy();
                                     while (true)
                                     {
                                         while (true)
@@ -365,6 +413,7 @@ namespace AutoLead
                                 try
                                 {
                                     sshcommand.closebitvise((int) this.numericUpDown1.Value);
+                                    Lumi.closeCCProxy();
                                     if (!this.bitproc.HasExited)
                                     {
                                         this.bitproc.Kill();
