@@ -240,6 +240,7 @@ namespace AutoLead
                 }
                 else
                 {
+
                     break;
                 }
             }
@@ -310,6 +311,25 @@ namespace AutoLead
 
         [DllImport("user32", CharSet = CharSet.Auto, ExactSpelling = false, SetLastError = true)]
         private static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int maxCount);
+
+        [DllImport("user32.dll", CharSet = CharSet.None, ExactSpelling = false)]
+        public static extern int SendMessage(IntPtr hWnd, int msg, int Param, StringBuilder text);
+
+        [DllImport("user32.dll", CharSet = CharSet.None, ExactSpelling = false)]
+        public static extern int SendMessage(IntPtr hWnd, int msg, int Param, string text);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = false)]
+        public static extern int SendMessage(IntPtr hWnd, int msg, IntPtr Param, IntPtr text);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = false, SetLastError = true)]
+        public static extern int SendMessageTimeout(IntPtr hWnd, int Msg, int wParam, StringBuilder lParam, int fuFlags, int uTimeout, out int lpdwResult);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = false, SetLastError = true)]
+        public static extern int SendMessageTimeout(IntPtr hWnd, int Msg, int wParam, string lParam, int fuFlags, int uTimeout, out int lpdwResult);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = false, SetLastError = true)]
+        public static extern int SendMessageTimeout(IntPtr hWnd, int Msg, IntPtr wParam, IntPtr lParam, int fuFlags, int uTimeout, out int lpdwResult);
+
     }
 
 }
