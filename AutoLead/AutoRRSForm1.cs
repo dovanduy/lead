@@ -17,6 +17,7 @@ namespace AutoLead
             //Form1.DisplayClass156_5 variable;
             MethodInvoker methodInvoker = null;
             vipaccount yellow;
+            luminatio_account yellow_lumi;
             bool @checked = false;
             Random random2 = new Random();
             List<backup>.Enumerator enumerator = this.listbackup.GetEnumerator();
@@ -155,7 +156,7 @@ namespace AutoLead
                                 {
                                     vip72Chung.clearIpWithPort((int)this.numericUpDown1.Value);
                                     sshcommand.closebitvise((int)this.numericUpDown1.Value);
-                                    Lumi.closeCCProxy();
+                                    Lumi.closeLuminatio((int)this.numericUpDown1.Value);
                                     if (!this.bitproc.HasExited)
                                     {
                                         this.bitproc.Kill();
@@ -169,25 +170,67 @@ namespace AutoLead
                                 {
                                     this.label1.Invoke(new MethodInvoker(() => this.label1.Text = "Checking Luminatio Account..."));
                                     string str11 = "";
-                                    this.label1.Invoke(new MethodInvoker(() => str11 = this.comboBox5.Text));
+                                    this.label1.Invoke(new MethodInvoker(() => str = this.comboBox5.Text));
 
                                     this.label1.Invoke(new MethodInvoker(() =>
                                         this.label1.Text = "Fake IP over CCProxy for country=" + str11));
 
-                                    if (!Lumi.fake_proxy(str11, this.ipAddressControl1.Text, this.numericUpDown1.Value.ToString(),
-                                        ref this.bitproc))
-                                    {
-                                        MessageBox.Show("Failed To change proxy with this Luminatio Account",
-                                            Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
-                                        this.label1.Invoke(new MethodInvoker(() => this.label1.Text = "Failed To change Luminatio"));
-                                        
-                                        this.label1.Invoke(new MethodInvoker(() => this.button7_Click(null, null)));
+                                    yellow_lumi = this.listlumiacc.FirstOrDefault<luminatio_account>((luminatio_account x) => !x.bad);
 
-                                        return;
+
+                                    if (yellow_lumi != null)
+                                    {
+                                        this.listViewQuan3.Invoke(new MethodInvoker(() =>
+                                        {
+                                            this.listViewQuan3.Items[this.listlumiacc.IndexOf(yellow_lumi)].BackColor = Color.Yellow;
+                                            this.listViewQuan3.Refresh();
+                                        }));
+
+                                        if (!(Lumi.fake_proxy_lumi(str11, this.numericUpDown1.Value.ToString(), yellow_lumi.zone, yellow_lumi.password, yellow_lumi.username)))
+
+                                        {
+                                            yellow_lumi.bad = true;
+                                            this.listViewQuan3.Invoke(new MethodInvoker(() =>
+                                            {
+                                                this.listViewQuan3.Items[this.listlumiacc.IndexOf(yellow_lumi)].BackColor = Color.Red;
+                                                this.listViewQuan3.Refresh();
+                                            }));
+                                            this.savelumi();
+
+                                        }
+                                        else {
+
+                                            this.listViewQuan3.Invoke(new MethodInvoker(() =>
+                                            {
+                                                this.listViewQuan3.Items[this.listlumiacc.IndexOf(yellow_lumi)].BackColor = Color.Lime;
+                                                this.listViewQuan3.Refresh();
+                                            }));
+
+                                            this.label1.Invoke(new MethodInvoker(() => this.label1.Text = "IP changed..." + Lumi.getCurrentLumiIPVer2(this.ipAddressControl1.Text, this.numericUpDown1.Value)));
+                                            this.button20.Invoke(new MethodInvoker(() => this.button20.Enabled = true));
+                                            this.curip = Lumi.getCurrentLumiIPVer2(this.ipAddressControl1.Text, this.numericUpDown1.Value);
+                                            this.savelumi();
+                                            break;
+                                        }
                                     }
                                     else
-                                    {
-                                        break;
+                                    {                                       
+                                        MessageBox.Show("There is no account, Please add other Lumi account to use",
+                                            Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                                        this.label1.Invoke(new MethodInvoker(() => this.label1.Text = "Lumi account is out"));
+                                        this.button7.Invoke(new MethodInvoker(() =>
+                                        {
+                                            if (this.button7.Text == "STOP")
+                                            {
+                                                this.button7_Click(null, null);
+                                            }
+
+                                            if (this.button19.Text == "STOP")
+                                            {
+                                                this.button19_Click(null, null);
+                                            }
+                                        }));
+                                       
                                     }
                                 }
 
@@ -198,7 +241,7 @@ namespace AutoLead
                             {
                                 vip72Chung.clearIpWithPort((int) this.numericUpDown1.Value);
                                 sshcommand.closebitvise((int) this.numericUpDown1.Value);
-                                Lumi.closeCCProxy();
+                                Lumi.closeLuminatio((int)this.numericUpDown1.Value);
                                 try
                                 {
                                     if (!this.bitproc.HasExited)
@@ -308,7 +351,7 @@ namespace AutoLead
                                     string str2 = "";
                                     vip72Chung.clearIpWithPort((int) this.numericUpDown1.Value);
                                     sshcommand.closebitvise((int) this.numericUpDown1.Value);
-                                    Lumi.closeCCProxy();
+                                    Lumi.closeLuminatio((int)this.numericUpDown1.Value);
                                     while (true)
                                     {
                                         while (true)
@@ -413,7 +456,7 @@ namespace AutoLead
                                 try
                                 {
                                     sshcommand.closebitvise((int) this.numericUpDown1.Value);
-                                    Lumi.closeCCProxy();
+                                    Lumi.closeLuminatio((int)this.numericUpDown1.Value);
                                     if (!this.bitproc.HasExited)
                                     {
                                         this.bitproc.Kill();

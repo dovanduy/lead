@@ -14,6 +14,7 @@ using System.Resources;
 using System.Globalization;
 using System.Windows.Forms;
 using Newtonsoft.Json.Linq;
+using RestSharp;
 
 
 namespace AutoLead
@@ -37,6 +38,61 @@ namespace AutoLead
                 process.Kill();
             }
         }
+
+        public static bool sendCheck()
+        {
+            bool isValid = false;
+            try
+            {
+                var client = new RestClient("http://127.0.0.1:22999");
+                // client.Authenticator = new HttpBasicAuthenticator(username, password);
+
+                var request = new RestRequest("api/version", Method.GET);
+
+                // execute the request
+                IRestResponse response = client.Execute(request);
+                var content = response.Content;
+
+                var json = JObject.Parse(content);
+                var jResult = json["version"];
+                isValid = true;
+            }
+            catch (Exception e)
+            {
+
+            }
+
+            return isValid;
+        }
+
+        public static void closeLuminatio(decimal port)
+        {
+            if (!Lumi.sendCheck())
+            {
+                //MessageBox.Show("Luminatio Proxy Manager is not running!", Application.ProductName, MessageBoxButtons.OK,MessageBoxIcon.Hand);
+                
+            }
+            else
+            {
+                try
+                {
+                    var client = new RestClient("http://127.0.0.1:22999");
+                    // client.Authenticator = new HttpBasicAuthenticator(username, password);
+
+                    var request = new RestRequest("api/proxies/" + port.ToString(), Method.DELETE);
+
+                    // execute the request
+                    client.Execute(request);
+                    
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("Error while Close Luminatio Port" + port.ToString(), Application.ProductName, MessageBoxButtons.OK,
+                        MessageBoxIcon.Hand);
+                }
+            }
+        }
+
 
         public static string FirstCharToUpper(string input)
         {
@@ -77,6 +133,132 @@ namespace AutoLead
                 return null;
             }
         }
+
+        public static bool fake_proxy_lumi(string countryName, string portforward, string zone, string password, string username)
+        {
+            bool isValid = false;
+
+            //check if configuration file is existed or not
+
+
+            DateTime now = DateTime.Now;
+            int maxwait = 30;
+            while (true)
+            {
+
+                if ((DateTime.Now - now).TotalSeconds <= (double)maxwait)
+                {
+                    var countryCode = Lumi.GetCountryCodeFromName(countryName);
+
+                    if (countryCode != null)
+                    {
+                        //check if port is exited.
+                        if (!Lumi.sendCheck())
+                        {
+                            MessageBox.Show("Luminatio Proxy Manager is not running!", Application.ProductName, MessageBoxButtons.OK,MessageBoxIcon.Hand);
+                            break;
+
+                        }
+                        else
+                        {
+                            //delete port whatever this have or not.
+                            try
+                            {
+                                var clientDelete = new RestClient("http://127.0.0.1:22999");
+                                // client.Authenticator = new HttpBasicAuthenticator(username, password);
+
+                                var requestDelete = new RestRequest("api/proxies/" + portforward, Method.DELETE);
+
+                                // execute the request
+                                clientDelete.Execute(requestDelete);
+
+                            }
+                            catch (Exception e)
+                            {
+                              
+                            }
+                            //create port with country.
+                            try
+                            {
+                                var client = new RestClient("http://127.0.0.1:22999");
+                                // client.Authenticator = new HttpBasicAuthenticator(username, password);
+
+                                var request = new RestRequest("api/proxies", Method.POST);
+                                request.RequestFormat = DataFormat.Json;
+                                request.AddBody(new { proxy = new
+                                {
+                                    port = portforward,
+                                    zone = zone,
+                                    country = countryCode.ToLower(),
+                                    password = password,
+                                    customer = username
+                                } });
+
+                                // execute the request
+                                IRestResponse response = client.Execute(request);
+
+                                var jsonRes = JObject.Parse(response.Content);
+                                var jResult = jsonRes["data"];
+
+                                Thread.Sleep(5);
+
+                                //MessageBox.Show("Luminatio Proxy set country port with res" + response.Content, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
+
+                               
+                                var request2 = new RestRequest("api/proxy_status/" + portforward, Method.GET);
+                                IRestResponse response2 = client.Execute(request2);
+
+                                var jsonRes2 = JObject.Parse(response2.Content);
+                                string jResult2 = (string)jsonRes2["status"];
+
+                                if (jResult2 == "ok")
+                                {
+                                    isValid = true;
+                                }
+                                else {
+
+                                    try
+                                    {                                       
+                                        var request3 = new RestRequest("api/proxies/" + portforward, Method.DELETE);
+
+                                        // execute the request
+                                        client.Execute(request3);
+
+                                    }
+                                    catch (Exception e)
+                                    {
+
+                                    }
+
+                                    MessageBox.Show("Luminatio Proxy set country port with error" + response2.Content, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
+
+                                }
+
+                                break;
+
+                            }
+                            catch (Exception e)
+                            {
+                                MessageBox.Show("Luminatio Proxy set country port with error" + e.ToString(), Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                                break;
+                            }
+
+                        }
+
+
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Timeout when finding country Code For Country" + countryName, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
+
+                    break;
+                }
+            }
+
+            return isValid;
+        }
+
 
         public static bool fake_proxy(string countryName, string ipforward, string portforward, ref Process refproc)
         {
@@ -238,7 +420,39 @@ namespace AutoLead
             return isValid;
         }
 
-        
+
+
+        public static string getCurrentLumiIPVer2(string ipforward, decimal portforward)
+        {
+            string currentIP = null;
+            try
+            {
+                Chilkat.Http http = new Chilkat.Http();
+                
+                bool success;
+                success = http.UnlockComponent("Anything for 30-day trial");
+                if (success != true)
+                {
+                    MessageBox.Show("Error when retrieve IP" + http.LastErrorText, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
+
+                }
+                else
+                {
+                    http.SocksHostname = ipforward;
+                    http.SocksVersion = 5;
+                    http.SocksPort = (int)portforward;
+                    Chilkat.HttpRequest req = new Chilkat.HttpRequest();
+                    currentIP = http.QuickGetStr("http://lumtest.com/myip");
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Error when retrieve IP" + e.ToString(), Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
+
+            }
+
+            return currentIP;
+        }
 
         public static string getCurrentLumiIP(string ipforward, decimal portforward)
         {

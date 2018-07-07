@@ -17,6 +17,7 @@ namespace AutoLead
         public int c_listoff = 0;
         public int c_ssh = 0;
         public int c_vip = 0;
+        public int c_lumi = 0;
         public int c_othersetting = 0;
         public int c_startall = 0;
         public int c_resetall = 0;
@@ -27,6 +28,7 @@ namespace AutoLead
         public int c_listofflocal = 0;
         public int c_sshlocal = 0;
         public int c_viplocal = 0;
+        public int c_lumilocal = 0;
         public int c_othersettinglocal = 0;
         public int c_startalllocal = 0;
         public int c_resetalllocal = 0;
@@ -66,7 +68,10 @@ namespace AutoLead
         private string oriadd = "";
         private int oriport = 0;
         private List<string> listcommand = new List<string>();
+
         private List<vipaccount> listvipacc = new List<vipaccount>();
+        private List<luminatio_account> listlumiacc = new List<luminatio_account>();
+
         private List<countrycode> listcountrycode = new List<countrycode>();
         private List<AutoLead.Script> listscript = new List<AutoLead.Script>();
         private Process bitproc = new Process();
@@ -84,8 +89,15 @@ namespace AutoLead
         private int backuptime = 0;
         private int prevy = 0;
         private ssh _getssh;
+
+
+
         private vipaccount vipacc;
         private string currentvipip;
+
+        private luminatio_account lumiacc;
+        private string currentlumiip;
+
         private List<string> listfirstname = new List<string>();
         private List<string> listlastname = new List<string>();
         private List<string> listemaildomain = new List<string>();
@@ -239,7 +251,10 @@ namespace AutoLead
         private Label label11;
         private Button button13;
         private Button button12;
+
         private Button button10;
+        
+
         private ComboBox wipecombo;
         private PictureBox pictureBox1;
         private TabPage tabPage7;
@@ -293,6 +308,23 @@ namespace AutoLead
         private ColumnHeader columnHeader2;
         private ColumnHeader columnHeader3;
         private ColumnHeader columnHeader4;
+
+
+        private TabPage tabPageQuan4;
+        private GroupBox groupBoxQuan2;
+        private TextBox lumipassword;
+        private TextBox lumiid;
+        private TextBox lumizone;
+        private Label labelQuan10;
+        private Label labelQuan7;
+        private Label labelQuanZone;
+        private Button lumiadd;
+        private Button lumidelete;
+        private ListView listViewQuan3;
+        private ColumnHeader columnHeaderQuan5;
+        private ColumnHeader columnHeaderQuan6;
+        private ColumnHeader columnHeaderQuanZone;
+
         private TabPage tabPage4;
         private CheckBox sameVip;
         private Button button57;
@@ -306,6 +338,7 @@ namespace AutoLead
         private ListView listView3;
         private ColumnHeader columnHeader5;
         private ColumnHeader columnHeader6;
+
         private TabPage tabPage1;
         private TextBox textBox11;
         private TextBox comment;

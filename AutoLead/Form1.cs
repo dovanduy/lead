@@ -123,7 +123,8 @@ namespace AutoLead
 			this.button30.Enabled = false;
 			this.button11.Enabled = false;
 			this.button12.Enabled = false;
-			this.button10.Enabled = false;
+			this.button10.Enabled = false;			
+
 			this.button13.Enabled = false;
 			this.wipecombo.Enabled = false;
 			this.button18.Enabled = false;
@@ -142,8 +143,8 @@ namespace AutoLead
 			this.button11.Enabled = true;
 			this.button30.Enabled = true;
 			this.button12.Enabled = true;
-			this.button10.Enabled = true;
-			this.button13.Enabled = true;
+			this.button10.Enabled = true;            
+            this.button13.Enabled = true;
 			this.wipecombo.Enabled = true;
 			this.button18.Enabled = true;
 			this.button28.Enabled = true;
@@ -1553,7 +1554,9 @@ namespace AutoLead
 			this.label11 = new Label();
 			this.button13 = new Button();
 			this.button12 = new Button();
-			this.button10 = new Button();
+
+			this.button10 = new Button();			
+
 			this.wipecombo = new ComboBox();
 			this.pictureBox1 = new PictureBox();
 			this.tabPage7 = new TabPage();
@@ -1607,6 +1610,8 @@ namespace AutoLead
 			this.columnHeader2 = new ColumnHeader();
 			this.columnHeader3 = new ColumnHeader();
 			this.columnHeader4 = new ColumnHeader();
+
+
 			this.tabPage4 = new TabPage();
 			this.sameVip = new CheckBox();
 			this.button57 = new Button();
@@ -1620,7 +1625,24 @@ namespace AutoLead
 			this.listView3 = new ListView();
 			this.columnHeader5 = new ColumnHeader();
 			this.columnHeader6 = new ColumnHeader();
-			this.tabPage1 = new TabPage();
+
+		    this.tabPageQuan4 = new TabPage();		   
+		    this.groupBoxQuan2 = new GroupBox();
+		    this.lumipassword = new TextBox();
+		    this.lumiid = new TextBox();
+		    this.lumizone = new TextBox();
+
+		    this.labelQuan10 = new Label();
+		    this.labelQuan7 = new Label();
+		    this.labelQuanZone = new Label();
+		    this.lumiadd = new Button();
+		    this.lumidelete = new Button();
+		    this.listViewQuan3 = new ListView();
+		    this.columnHeaderQuan5 = new ColumnHeader();
+		    this.columnHeaderQuan6 = new ColumnHeader();
+		    this.columnHeaderQuanZone = new ColumnHeader();
+
+            this.tabPage1 = new TabPage();
 			this.textBox11 = new TextBox();
 			this.comment = new TextBox();
 			this.label44 = new Label();
@@ -1696,9 +1718,16 @@ namespace AutoLead
 			this.tabControl2.SuspendLayout();
 			this.tabPage3.SuspendLayout();
 			((ISupportInitialize)this.numericUpDown2).BeginInit();
+
+
 			this.tabPage4.SuspendLayout();
 			this.groupBox2.SuspendLayout();
-			this.tabPage1.SuspendLayout();
+
+		    this.tabPageQuan4.SuspendLayout();
+		    this.groupBoxQuan2.SuspendLayout();
+
+
+            this.tabPage1.SuspendLayout();
 			((ISupportInitialize)this.numericUpDown6).BeginInit();
 			((ISupportInitialize)this.numericUpDown3).BeginInit();
 			((ISupportInitialize)this.itunesY).BeginInit();
@@ -1794,7 +1823,7 @@ namespace AutoLead
 			this.numericUpDown1.Name = "numericUpDown1";
 			this.numericUpDown1.Size = new System.Drawing.Size(50, 20);
 			this.numericUpDown1.TabIndex = 4;
-			this.numericUpDown1.Value = new decimal(new int[] { 1080, 0, 0, 0 });
+		    this.numericUpDown1.Value = new decimal(new int[] { 1080, 0, 0, 0 });
 			this.numericUpDown1.ValueChanged += new EventHandler(this.numericUpDown1_ValueChanged);
 			this.comboBox5.DropDownStyle = ComboBoxStyle.DropDownList;
 			this.comboBox5.FormattingEnabled = true;
@@ -3054,7 +3083,11 @@ namespace AutoLead
 			this.tabPage2.Text = "Proxy";
 			this.tabPage2.UseVisualStyleBackColor = true;
 			this.tabControl2.Controls.Add(this.tabPage3);
+
 			this.tabControl2.Controls.Add(this.tabPage4);
+			this.tabControl2.Controls.Add(this.tabPageQuan4);
+
+
 			this.tabControl2.Location = new Point(-4, 0);
 			this.tabControl2.Name = "tabControl2";
 			this.tabControl2.SelectedIndex = 0;
@@ -3208,6 +3241,8 @@ namespace AutoLead
 			this.columnHeader3.Width = 97;
 			this.columnHeader4.Text = "Country";
 			this.columnHeader4.Width = 134;
+
+
 			this.tabPage4.Controls.Add(this.sameVip);
 			this.tabPage4.Controls.Add(this.button57);
 			this.tabPage4.Controls.Add(this.groupBox2);
@@ -3221,7 +3256,9 @@ namespace AutoLead
 			this.tabPage4.Text = "VIP72";
 			this.tabPage4.UseVisualStyleBackColor = true;
 			this.tabPage4.Click += new EventHandler(this.tabPage4_Click);
-			this.sameVip.AutoSize = true;
+            
+
+            this.sameVip.AutoSize = true;
 			this.sameVip.Checked = true;
 			this.sameVip.CheckState = CheckState.Checked;
 			this.sameVip.Location = new Point(39, 353);
@@ -3231,7 +3268,11 @@ namespace AutoLead
 			this.sameVip.Text = "Sử dụng chung Vip72 với nhau.";
 			this.sameVip.UseVisualStyleBackColor = true;
 			this.sameVip.CheckedChanged += new EventHandler(this.sameVip_CheckedChanged);
-			this.button57.Location = new Point(180, 304);
+
+		    
+
+
+            this.button57.Location = new Point(180, 304);
 			this.button57.Name = "button57";
 			this.button57.Size = new System.Drawing.Size(101, 23);
 			this.button57.TabIndex = 12;
@@ -3295,7 +3336,109 @@ namespace AutoLead
 			this.columnHeader5.Width = 112;
 			this.columnHeader6.Text = "Password";
 			this.columnHeader6.Width = 107;
-			this.tabPage1.Controls.Add(this.textBox11);
+
+
+            this.tabPageQuan4.Controls.Add(this.groupBoxQuan2);
+            this.tabPageQuan4.Controls.Add(this.lumidelete);
+            
+            this.tabPageQuan4.Controls.Add(this.listViewQuan3);
+            this.tabPageQuan4.Location = new Point(4, 22);
+            this.tabPageQuan4.Name = "tabPageQuan4";
+            this.tabPageQuan4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageQuan4.Size = new System.Drawing.Size(622, 454);
+            this.tabPageQuan4.TabIndex = 2;
+            this.tabPageQuan4.Text = "Luminatio";
+            this.tabPageQuan4.UseVisualStyleBackColor = true;
+            this.tabPageQuan4.Click += new EventHandler(this.tabPageQuan4_Click);
+
+            this.groupBoxQuan2.Controls.Add(this.lumipassword);
+            this.groupBoxQuan2.Controls.Add(this.lumiid);
+            this.groupBoxQuan2.Controls.Add(this.lumizone);
+            this.groupBoxQuan2.Controls.Add(this.labelQuan10);
+            this.groupBoxQuan2.Controls.Add(this.labelQuan7);
+            this.groupBoxQuan2.Controls.Add(this.labelQuanZone);
+            this.groupBoxQuan2.Controls.Add(this.lumiadd);
+            this.groupBoxQuan2.Location = new Point(343, 40);
+            this.groupBoxQuan2.Name = "groupBoxQuan2";
+            this.groupBoxQuan2.Size = new System.Drawing.Size(229, 252);
+            this.groupBoxQuan2.TabIndex = 11;
+            this.groupBoxQuan2.TabStop = false;
+            this.groupBoxQuan2.Text = "Add account";
+
+            this.lumipassword.Location = new Point(100, 164);
+            this.lumipassword.Name = "lumipassword";
+            this.lumipassword.Size = new System.Drawing.Size(100, 20);
+            this.lumipassword.TabIndex = 5;
+
+            this.lumiid.Location = new Point(100, 36);           
+            this.lumiid.Name = "lumiid";
+            this.lumiid.Size = new System.Drawing.Size(100, 36);
+            this.lumiid.TabIndex = 4;
+
+            this.lumizone.Location = new Point(100, 100);            
+            this.lumizone.Name = "lumizone";
+            this.lumizone.Size = new System.Drawing.Size(100, 20);
+            this.lumizone.TabIndex = 6;
+
+            this.labelQuan10.AutoSize = true;
+            this.labelQuan10.Location = new Point(26, 167);
+            this.labelQuan10.Name = "labelQuan10";
+            this.labelQuan10.Size = new System.Drawing.Size(53, 13);
+            this.labelQuan10.TabIndex = 3;
+            this.labelQuan10.Text = "Password";
+
+
+            this.labelQuan7.AutoSize = true;
+            this.labelQuan7.Location = new Point(42, 46);
+            this.labelQuan7.Name = "labelQuan7";
+            this.labelQuan7.Size = new System.Drawing.Size(18, 13);
+            this.labelQuan7.TabIndex = 2;
+            this.labelQuan7.Text = "ID";
+
+            this.labelQuanZone.AutoSize = true;
+            this.labelQuanZone.Location = new Point(42, 110);
+            this.labelQuanZone.Name = "labelQuanZone";
+            this.labelQuanZone.Size = new System.Drawing.Size(18, 13);
+            this.labelQuanZone.TabIndex = 7;
+            this.labelQuanZone.Text = "Zone";
+
+            this.lumiadd.Location = new Point(86, 214);
+            this.lumiadd.Name = "lumiadd";
+            this.lumiadd.Size = new System.Drawing.Size(91, 23);
+            this.lumiadd.TabIndex = 1;
+            this.lumiadd.Text = "Add Account";
+            this.lumiadd.UseVisualStyleBackColor = true;
+            this.lumiadd.Click += new EventHandler(this.buttonLumiadd_Click);
+
+
+            this.lumidelete.Location = new Point(39, 304);
+            this.lumidelete.Name = "lumidelete";
+            this.lumidelete.Size = new System.Drawing.Size(89, 23);
+            this.lumidelete.TabIndex = 2;
+            this.lumidelete.Text = "Delete Account";
+            this.lumidelete.UseVisualStyleBackColor = true;
+            this.lumidelete.Click += new EventHandler(this.lumidelete_Click);
+
+            this.listViewQuan3.Columns.AddRange(new ColumnHeader[] { this.columnHeaderQuan5, this.columnHeaderQuan6, this.columnHeaderQuanZone });
+            this.listViewQuan3.Location = new Point(34, 20);
+            this.listViewQuan3.Name = "listViewQuan3";
+            this.listViewQuan3.Size = new System.Drawing.Size(237, 257);
+            this.listViewQuan3.TabIndex = 0;
+            this.listViewQuan3.UseCompatibleStateImageBehavior = false;
+            this.listViewQuan3.View = View.Details;
+            this.listViewQuan3.KeyDown += new KeyEventHandler(this.listViewQuan3_KeyDown);
+
+            this.columnHeaderQuan5.Text = "Username";
+            this.columnHeaderQuan5.Width = 60;
+
+            this.columnHeaderQuan6.Text = "Password";
+            this.columnHeaderQuan6.Width = 80;
+
+            this.columnHeaderQuanZone.Text = "Zone";
+            this.columnHeaderQuanZone.Width = 60;
+
+
+            this.tabPage1.Controls.Add(this.textBox11);
 			this.tabPage1.Controls.Add(this.comment);
 			this.tabPage1.Controls.Add(this.label44);
 			this.tabPage1.Controls.Add(this.checkBox18);
@@ -3686,9 +3829,15 @@ namespace AutoLead
 			this.tabPage3.ResumeLayout(false);
 			this.tabPage3.PerformLayout();
 			((ISupportInitialize)this.numericUpDown2).EndInit();
+
 			this.tabPage4.ResumeLayout(false);
 			this.tabPage4.PerformLayout();
-			this.groupBox2.ResumeLayout(false);
+
+		    this.tabPageQuan4.ResumeLayout(false);
+		    this.tabPageQuan4.PerformLayout();
+
+
+            this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();
 			this.tabPage1.ResumeLayout(false);
 			this.tabPage1.PerformLayout();
@@ -3992,6 +4141,7 @@ namespace AutoLead
 		{
 			this.loadssh();
 			this.loadvip72();
+			this.loadlumi();
 			this.loadscripts();
 			this.loadofferlist();
 			this.loadothresetting();
@@ -4034,7 +4184,41 @@ namespace AutoLead
 			}
 		}
 
-	    private void passlistview(bool add, object sender)
+        private void loadlumi()
+        {
+            string dir = "default";
+
+            if (this.DeviceInfo.SerialNumber != null) {
+                dir = this.DeviceInfo.SerialNumber;
+            }
+
+            this.listlumiacc.Clear();
+            this.listViewQuan3.Items.Clear();
+            if (File.Exists(string.Concat(AppDomain.CurrentDomain.BaseDirectory, dir, "\\lumi.dat")))
+            {
+                Decryptor decryptor = new Decryptor();
+                string[] strArrays = decryptor.Decrypt(File.ReadAllText(string.Concat(AppDomain.CurrentDomain.BaseDirectory, dir, "\\lumi.dat")), this.privatekey).Split(new string[] { "\r\n" }, StringSplitOptions.None);
+                for (int i = 0; i < (int)strArrays.Length; i++)
+                {
+                    string str = strArrays[i];
+                    string[] strArrays1 = str.Split(new string[] { "||" }, StringSplitOptions.None);
+                    if (strArrays1.Count<string>() == 3)
+                    {
+                        luminatio_account _lumiaccount = new luminatio_account()
+                        {
+                            username = strArrays1[0],
+                            password = strArrays1[1],
+                            zone = strArrays1[2]
+                        };
+                        this.listlumiacc.Add(_lumiaccount);
+                        ListViewItem listViewItem = new ListViewItem(new string[] { _lumiaccount.username, _lumiaccount.password, _lumiaccount.zone });
+                        this.listViewQuan3.Items.Add(listViewItem);
+                    }
+                }
+            }
+        }
+
+        private void passlistview(bool add, object sender)
 		{
 			if (!(this.listView1.SelectedItems.Count <= 0 | add))
 			{
@@ -4662,7 +4846,30 @@ namespace AutoLead
 			}
 		}
 
-		private void Send(byte[] buffer)
+        private void savelumi()
+        {
+
+            string dir = "default";
+
+            if (this.DeviceInfo.SerialNumber != null) {
+                dir = this.DeviceInfo.SerialNumber;
+            }
+
+            string str = string.Concat(AppDomain.CurrentDomain.BaseDirectory, dir, "\\lumi.dat");
+            if (!Directory.Exists(string.Concat(AppDomain.CurrentDomain.BaseDirectory, dir)))
+            {
+                Directory.CreateDirectory(string.Concat(AppDomain.CurrentDomain.BaseDirectory, dir));
+            }
+            string str1 = "";
+            foreach (luminatio_account _lumiaccount in this.listlumiacc)
+            {
+                str1 = string.Concat(new string[] { str1, _lumiaccount.username, "||", _lumiaccount.password, "||", _lumiaccount.zone, "\r\n" });
+            }
+            Encryptor encryptor = new Encryptor();
+            File.WriteAllText(str, encryptor.Encrypt(str1, this.privatekey));
+        }
+
+        private void Send(byte[] buffer)
 		{
 			try
 			{

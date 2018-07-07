@@ -179,6 +179,61 @@ namespace AutoLead
             base.Close();
         }
 
+        private void buttonLumiadd_Click(object sender, EventArgs e)
+        {
+            string id = this.lumiid.Text;
+            string password = this.lumipassword.Text;
+            string zone = this.lumizone.Text;
+
+            if (id != "" && password != "" && zone != "")
+            {
+                luminatio_account _lumiaccount = this.listlumiacc.FirstOrDefault<luminatio_account>((luminatio_account x) => x.username == id && x.zone == zone);
+                if (_lumiaccount != null)
+                {
+                    _lumiaccount.password = password;
+                    try
+                    {
+                        this.listViewQuan3.Items[this.listlumiacc.IndexOf(_lumiaccount)].SubItems[1].Text = id;
+                    }
+                    catch (Exception exQuan)
+                    {
+                        MessageBox.Show("Please enter all information!" + exQuan.ToString(), Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
+
+                        _lumiaccount = new luminatio_account()
+                        {
+                            username = id,
+                            password = password,
+                            zone = zone,
+                            bad = false
+                        };
+                        this.listlumiacc.Add(_lumiaccount);
+                        ListViewItem listViewItem = new ListViewItem(new string[] { _lumiaccount.username, _lumiaccount.password, _lumiaccount.zone });
+                        this.listViewQuan3.Items.Add(listViewItem);
+                    }
+                    
+                }
+                else
+                {
+                    _lumiaccount = new luminatio_account()
+                    {
+                        username = id,
+                        password = password,
+                        zone = zone,
+                        bad = false
+                    };
+                    this.listlumiacc.Add(_lumiaccount);
+                    ListViewItem listViewItem = new ListViewItem(new string[] { _lumiaccount.username, _lumiaccount.password, _lumiaccount.zone });
+                    this.listViewQuan3.Items.Add(listViewItem);
+                }
+                this.savelumi();
+            }
+            else {
+                MessageBox.Show("Please enter all information!", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
+
+            }
+
+        }
+
         private void button10_Click(object sender, EventArgs e)
         {
             foreach (string list in this.vipid.Text.Split(new string[] { "\r\n" }, StringSplitOptions.None).ToList<string>())
@@ -1744,6 +1799,14 @@ namespace AutoLead
             }
         }
 
+        private void listViewQuan3_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete)
+            {
+                this.lumidelete_Click(null, null);
+            }
+        }
+
         private void listView4_ColumnClick(object sender, ColumnClickEventArgs e)
         {
             if (e.Column != 0)
@@ -2124,6 +2187,23 @@ namespace AutoLead
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
+            if ((int)this.numericUpDown1.Value == 22999)
+            {
+                while (true)
+                {
+                    decimal design_value = new decimal(new int[] { 1080, 0, 0, 0 });
+
+                    if ((int)design_value != 22999)
+                    {
+                        this.numericUpDown1.Value = design_value;
+                        break;
+                    }
+
+                }
+
+            }
+
+
             this.button23.Text = "Apply";
         }
 
@@ -2395,6 +2475,10 @@ namespace AutoLead
         {
         }
 
+        private void tabPageQuan4_Click(object sender, EventArgs e)
+        {
+        }
+
         private void tabPage6_MouseClick(object sender, MouseEventArgs e)
         {
             this.listView5.Hide();
@@ -2515,6 +2599,19 @@ namespace AutoLead
                 }
             }
             this.savevip72();
+        }
+
+        private void lumidelete_Click(object sender, EventArgs e)
+        {
+            if (this.listViewQuan3.SelectedItems.Count > 0)
+            {
+                for (int i = this.listViewQuan3.SelectedItems.Count - 1; i >= 0; i--)
+                {
+                    this.listlumiacc.RemoveAt(this.listViewQuan3.SelectedItems[i].Index);
+                    this.listViewQuan3.Items.Remove(this.listViewQuan3.SelectedItems[i]);
+                }
+            }
+            this.savelumi();
         }
 
         private void wipecombo_SelectedIndexChanged(object sender, EventArgs e)

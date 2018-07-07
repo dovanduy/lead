@@ -44,7 +44,12 @@ namespace AutoLead
 
     public class luminatio_account
     {
-        public bool limited
+        public bool bad
+        {
+            get;
+            set;
+        }
+        public string zone
         {
             get;
             set;
