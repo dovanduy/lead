@@ -199,16 +199,6 @@ namespace AutoLead
                     {
                         MessageBox.Show("Please enter all information!" + exQuan.ToString(), Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
 
-                        _lumiaccount = new luminatio_account()
-                        {
-                            username = id,
-                            password = password,
-                            zone = zone,
-                            bad = false
-                        };
-                        this.listlumiacc.Add(_lumiaccount);
-                        ListViewItem listViewItem = new ListViewItem(new string[] { _lumiaccount.username, _lumiaccount.password, _lumiaccount.zone });
-                        this.listViewQuan3.Items.Add(listViewItem);
                     }
                     
                 }
@@ -578,6 +568,8 @@ namespace AutoLead
                 }
                 if (flag)
                 {
+                    MessageBox.Show("Button Apply Click!", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
+
                     (new Thread(new ThreadStart(this.threadsetsock))).Start();
                 }
                 else

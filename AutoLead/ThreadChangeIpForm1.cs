@@ -44,7 +44,7 @@ namespace AutoLead
                     {
                         vip72Chung.clearIpWithPort((int) this.numericUpDown1.Value);
                         sshcommand.closebitvise((int) this.numericUpDown1.Value);
-                        Lumi.closeLuminatio((int)this.numericUpDown1.Value);
+                        //Lumi.closeLuminatio((int)this.numericUpDown1.Value);
                         if (!this.bitproc.HasExited)
                         {
                             this.bitproc.Kill();

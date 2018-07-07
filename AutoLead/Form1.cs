@@ -54,6 +54,7 @@ namespace AutoLead
 			this.loadtimezone();
 			this.loadcarrier();
 			this.loadgeo();
+            this.loadlumi();
 			this.loadcountrycodeiOS();
 			this.lvwColumnSorter = new ListViewColumnSorter();
 			this.listView4.ListViewItemSorter = this.lvwColumnSorter;
@@ -257,7 +258,9 @@ namespace AutoLead
 										this.button23.Refresh();
 										if (this.button23.Text.Contains("Enable"))
 										{
-											this.button23_Click(null, null);
+                                            MessageBox.Show("Change Proxy from AnalyData!", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
+
+                                            this.button23_Click(null, null);
 										}
 									}
 								}
@@ -4202,7 +4205,7 @@ namespace AutoLead
                 {
                     string str = strArrays[i];
                     string[] strArrays1 = str.Split(new string[] { "||" }, StringSplitOptions.None);
-                    if (strArrays1.Count<string>() == 3)
+                    if (strArrays1.Count<string>() > 2)
                     {
                         luminatio_account _lumiaccount = new luminatio_account()
                         {
@@ -4215,7 +4218,7 @@ namespace AutoLead
                         this.listViewQuan3.Items.Add(listViewItem);
                     }
                 }
-            }
+            }           
         }
 
         private void passlistview(bool add, object sender)
@@ -4867,6 +4870,9 @@ namespace AutoLead
             }
             Encryptor encryptor = new Encryptor();
             File.WriteAllText(str, encryptor.Encrypt(str1, this.privatekey));
+
+            this.label1.Invoke(new MethodInvoker(() =>
+                                this.label1.Text = "Save LUmi IP To" + string.Concat(AppDomain.CurrentDomain.BaseDirectory, dir)));
         }
 
         private void Send(byte[] buffer)

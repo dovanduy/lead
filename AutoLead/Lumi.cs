@@ -111,27 +111,156 @@ namespace AutoLead
             {
                 // API key is recommended, but not required
                 const string strGoogleApiKey = "";
-                var strUrl = "https://maps.googleapis.com/maps/api/geocode/json?address={0}";
+                var strUrl = "http://tracuuduoclieu.vn/country/?name={0}";
                 strUrl = string.Format(strUrl, ucfirstName);
                 var wc = new WebClient();
-                var strJson = wc.DownloadString(strUrl);
-                var json = JObject.Parse(strJson);
-                var jResult = json["results"][0];
-                var jAddressComponents = jResult["address_components"];
-                foreach (var jAddressComponent in jAddressComponents)
-                {
-                    var jTypes = jAddressComponent["types"];
-                    if (jTypes.Any(t => t.ToString() == "country"))
-                    {
-                        return jAddressComponent["short_name"].ToString();
-                    }
-                }
-                return null;
+                return wc.DownloadString(strUrl);               
             }
-            catch
+            catch (Exception ee)
             {
-                return null;
+               // MessageBox.Show("Luminatio get Country Code failed with " + ee.ToString(), Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
+
             }
+            return null;
+        }
+
+        public static bool checkIfPortExisted(string port)
+        {
+            bool existed = false;
+            try
+            {
+                var client = new RestClient("http://127.0.0.1:22999");
+                var request2 = new RestRequest("api/proxy_status/" + port, Method.GET);
+                IRestResponse response2 = client.Execute(request2);
+
+                var jsonRes2 = JObject.Parse(response2.Content);
+                string jResult2 = (string)jsonRes2["status"];
+
+                if (jResult2 == "ok")
+                {
+                    existed = true;
+                }
+            }
+            catch (Exception eee) {
+
+            }
+
+            return existed;
+        }
+
+        public static bool CreateOrUpdateProxy(string port, string username, string password, string zone, string countryCode, bool isUpdate)
+        {
+            bool isValid = false;
+            RestRequest request;
+            try
+            {
+                var client = new RestClient("http://127.0.0.1:22999");
+                if (isUpdate == true)
+                {
+                    request = new RestRequest("api/proxies/" + port, Method.PUT);
+
+                    
+                }
+                else
+                {
+                    request = new RestRequest("api/proxies", Method.POST);
+
+                }
+
+                request.RequestFormat = DataFormat.Json;
+                request.AddBody(new
+                {
+                    proxy = new
+                    {
+                        port = port,
+                        zone = zone,
+                        country = countryCode.ToLower(),
+                        password = password,
+                        customer = username
+                    }
+                });
+
+                // execute the request
+                IRestResponse response = client.Execute(request);
+
+                var jsonRes = JObject.Parse(response.Content);
+                var jResult = jsonRes["data"];
+                Thread.Sleep(5);
+
+                bool checkExisted = Lumi.checkIfPortExisted(port);
+
+                if (checkExisted == true) {
+                    isValid = true;
+                }
+
+            }
+            catch (Exception eee)
+            {
+
+            }
+            return isValid;
+        }
+
+        public static bool CheckIfHaveProxySameInfo(string port, string username, string zone, string password, string countryCode)
+        {
+            bool isSame = false;
+
+            try
+            {
+                var client = new RestClient("http://127.0.0.1:22999");
+                var request2 = new RestRequest("api/proxies_running", Method.GET);
+                IRestResponse response2 = client.Execute(request2);
+
+                JArray a = JArray.Parse(response2.Content);
+
+                foreach (JObject o in a.Children<JObject>())
+                {
+
+                    string jsonUsername = null;
+                    string jsonPassword = null;
+                    string jsonZone = null;
+                    string jsonPort = null;
+
+                    foreach (JProperty p in o.Properties())
+                    {
+                        string name = p.Name;                      
+
+                        if (name == "port") {
+                            jsonPort = (string)p.Value;
+                        }
+                        if (name == "customer")
+                        {
+                            jsonUsername = (string)p.Value;
+                        }
+
+                        if (name == "password")
+                        {
+                            jsonPassword = (string)p.Value;
+                        }
+
+                        if (name == "country")
+                        {
+                            jsonZone = (string)p.Value;
+                        }
+
+                    }
+                    if (jsonUsername == username && jsonPassword == password && jsonZone == countryCode.ToLower())
+                    {
+                        isSame = true;
+                    }
+
+                }
+
+            }
+            catch (Exception eeee) {
+                MessageBox.Show("Luminatio check same info failed " + eeee.ToString(), Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
+
+            }
+
+
+
+            return isSame;
+
         }
 
         public static bool fake_proxy_lumi(string countryName, string portforward, string zone, string password, string username)
@@ -156,95 +285,43 @@ namespace AutoLead
                         if (!Lumi.sendCheck())
                         {
                             MessageBox.Show("Luminatio Proxy Manager is not running!", Application.ProductName, MessageBoxButtons.OK,MessageBoxIcon.Hand);
-                            break;
-
+                          
                         }
                         else
-                        {
-                            //delete port whatever this have or not.
-                            try
-                            {
-                                var clientDelete = new RestClient("http://127.0.0.1:22999");
-                                // client.Authenticator = new HttpBasicAuthenticator(username, password);
-
-                                var requestDelete = new RestRequest("api/proxies/" + portforward, Method.DELETE);
-
-                                // execute the request
-                                clientDelete.Execute(requestDelete);
-
-                            }
-                            catch (Exception e)
-                            {
-                              
-                            }
+                        {                           
                             //create port with country.
                             try
                             {
-                                var client = new RestClient("http://127.0.0.1:22999");
-                                // client.Authenticator = new HttpBasicAuthenticator(username, password);
 
-                                var request = new RestRequest("api/proxies", Method.POST);
-                                request.RequestFormat = DataFormat.Json;
-                                request.AddBody(new { proxy = new
+                                bool isPortExisted = Lumi.checkIfPortExisted(portforward);
+
+                                if (isPortExisted)
                                 {
-                                    port = portforward,
-                                    zone = zone,
-                                    country = countryCode.ToLower(),
-                                    password = password,
-                                    customer = username
-                                } });
+                                    bool isSame = Lumi.CheckIfHaveProxySameInfo(portforward, username, zone, password, countryCode);
 
-                                // execute the request
-                                IRestResponse response = client.Execute(request);
+                                    if (isSame == true)
+                                    {
+                                        isValid = true;
+                                    }
+                                    else
+                                    {
+                                        isValid = CreateOrUpdateProxy(portforward, username, password, zone, countryCode, true);
 
-                                var jsonRes = JObject.Parse(response.Content);
-                                var jResult = jsonRes["data"];
-
-                                Thread.Sleep(5);
-
-                                //MessageBox.Show("Luminatio Proxy set country port with res" + response.Content, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
-
-                               
-                                var request2 = new RestRequest("api/proxy_status/" + portforward, Method.GET);
-                                IRestResponse response2 = client.Execute(request2);
-
-                                var jsonRes2 = JObject.Parse(response2.Content);
-                                string jResult2 = (string)jsonRes2["status"];
-
-                                if (jResult2 == "ok")
-                                {
-                                    isValid = true;
+                                    }
                                 }
                                 else {
+                                    isValid = CreateOrUpdateProxy(portforward, username, password, zone, countryCode, false);
 
-                                    try
-                                    {                                       
-                                        var request3 = new RestRequest("api/proxies/" + portforward, Method.DELETE);
-
-                                        // execute the request
-                                        client.Execute(request3);
-
-                                    }
-                                    catch (Exception e)
-                                    {
-
-                                    }
-
-                                    MessageBox.Show("Luminatio Proxy set country port with error" + response2.Content, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
-
-                                }
-
-                                break;
-
+                                }  
                             }
                             catch (Exception e)
                             {
                                 MessageBox.Show("Luminatio Proxy set country port with error" + e.ToString(), Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
-                                break;
+                               
                             }
 
                         }
-
+                        break;
 
                     }
                 }
