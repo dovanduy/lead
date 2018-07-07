@@ -1,0 +1,278 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>BetterHttpClient</name>
+    </assembly>
+    <members>
+        <member name="P:BetterHttpClient.HttpClient.Cookies">
+            <summary>
+            Cookie container.
+            </summary>
+        </member>
+        <member name="P:BetterHttpClient.HttpClient.Proxy">
+            <summary>
+            Proxy which should be used for request.
+            Set null or proxy with type ProxyTypeEnum.None if you want to perform request without proxy.
+            </summary>
+        </member>
+        <member name="P:BetterHttpClient.HttpClient.Timeout">
+            <summary>
+            Timeout for request.
+            </summary>
+            <value>Has to be greater than 5 milliseconds.<para />
+            Default value: 60 seconds.</value>
+        </member>
+        <member name="P:BetterHttpClient.HttpClient.NumberOfAttempts">
+            <summary>
+            Set number of attempts that can be made to execute request.
+            </summary>
+            <value>Default value: 4 attempts.<para />
+            Should be greater than 1</value>
+        </member>
+        <member name="P:BetterHttpClient.HttpClient.UserAgent">
+            <summary>
+            Set User-Agent header.
+            </summary>
+            <value>Default value: "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:41.0) Gecko/20100101 Firefox/41.0"</value>
+        </member>
+        <member name="P:BetterHttpClient.HttpClient.Accept">
+            <summary>
+            Set Accept header.
+            </summary>
+            <value>Default value: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"</value>
+        </member>
+        <member name="P:BetterHttpClient.HttpClient.Referer">
+            <summary>
+            Set Referer header.
+            </summary>
+            <value>Default value: null</value>
+        </member>
+        <member name="P:BetterHttpClient.HttpClient.AcceptLanguage">
+            <summary>
+            Set Accept-Language header.
+            </summary>
+            <value>Default value: "en-US;q=0.7,en;q=0.3"</value>
+        </member>
+        <member name="P:BetterHttpClient.HttpClient.AcceptEncoding">
+            <summary>
+            Set default Accept-Encoding header.
+            </summary>
+            <value>Default value: "gzip, deflate"</value>
+        </member>
+        <member name="P:BetterHttpClient.HttpClient.Encoding">
+            <summary>
+            Set encoding for request.
+            </summary>
+            <value>Default value: UTF-8</value>
+        </member>
+        <member name="P:BetterHttpClient.HttpClient.AllowAutoRedirect">
+            <summary>
+            Enabled automatic redirect. Default: true
+            </summary>
+        </member>
+        <member name="P:BetterHttpClient.HttpClient.CustomHeaders">
+            <summary>
+            Headers collection that will be added to each request
+            </summary>
+        </member>
+        <member name="M:BetterHttpClient.HttpClient.Get(System.String)">
+            <summary>
+            Execute GET request.
+            </summary>
+            <param name="url"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BetterHttpClient.HttpClient.Post(System.String,System.Collections.Specialized.NameValueCollection)">
+            <summary>
+            Execute POST request.
+            </summary>
+            <param name="url"></param>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BetterHttpClient.HttpClient.DownloadBytes(System.String)">
+            <summary>
+            Execute GET request.
+            </summary>
+            <param name="url"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BetterHttpClient.HttpClient.DownloadBytes(System.String,System.Collections.Specialized.NameValueCollection)">
+            <summary>
+            Excecute POST request.
+            </summary>
+            <param name="url"></param>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="P:BetterHttpClient.CheckService.ProxyJudgeServiceAbstract.NumberOfAttempts">
+            <summary>
+            Set number of attempts which can be made to verify proxy.
+            </summary>
+        </member>
+        <member name="M:BetterHttpClient.CheckService.ProxyJudgeServiceAbstract.IsProxyAnonymous(BetterHttpClient.Proxy)">
+            <summary>
+            Abstract method. Should return true if proxy is hiding your real ip address.
+            </summary>
+            <param name="proxy"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BetterHttpClient.CheckService.ProxyJudgeServiceAbstract.GetMyIp">
+            <summary>
+            Abstract method. Should return real ip addres of user (so without any proxy).
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:BetterHttpClient.Proxy.IsBusy">
+            <summary>
+            Check if proxy is busy.
+            </summary>
+        </member>
+        <member name="M:BetterHttpClient.Proxy.IsAnonymous(BetterHttpClient.CheckService.ProxyJudgeService)">
+            <summary>
+            Returns true if proxy can hide your ip address
+            </summary>
+        </member>
+        <member name="P:BetterHttpClient.ProxyManager.UserAgent">
+            <summary>
+            Set User-Agent header.
+            </summary>
+            <value>Default value: "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:41.0) Gecko/20100101 Firefox/41.0"</value>
+        </member>
+        <member name="P:BetterHttpClient.ProxyManager.Accept">
+            <summary>
+            Set Accept header.
+            </summary>
+            <value>Default value: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"</value>
+        </member>
+        <member name="P:BetterHttpClient.ProxyManager.Referer">
+            <summary>
+            Set Referer header.
+            </summary>
+            <value>Default value: null</value>
+        </member>
+        <member name="P:BetterHttpClient.ProxyManager.AcceptLanguage">
+            <summary>
+            Set Accept-Language header.
+            </summary>
+            <value>Default value: "en-US;q=0.7,en;q=0.3"</value>
+        </member>
+        <member name="P:BetterHttpClient.ProxyManager.AcceptEncoding">
+            <summary>
+            Set default Accept-Encoding header.
+            </summary>
+            <value>Default value: "gzip, deflate"</value>
+        </member>
+        <member name="P:BetterHttpClient.ProxyManager.ProxyJudgeService">
+            <summary>
+            Set proxy check service.
+            Must derive from ProxyCheckService class.
+            </summary>
+        </member>
+        <member name="P:BetterHttpClient.ProxyManager.RequiredString">
+            <summary>
+            Downloaded page has to contain this tring.
+            It helps to check if returned page is the page which we watned to receive.
+            Proxy sometimes are returing some other pages.
+            Default value string.Empty
+            </summary>
+        </member>
+        <member name="P:BetterHttpClient.ProxyManager.Encoding">
+            <summary>
+            Set encoding for request.
+            </summary>
+            <value>Default value: UTF-8</value>
+        </member>
+        <member name="P:BetterHttpClient.ProxyManager.AnonymousProxyOnly">
+            <summary>
+            Set this to true if you want to use only anonymous proxies.
+            </summary>
+            <value>Default value: false</value>
+        </member>
+        <member name="P:BetterHttpClient.ProxyManager.Timeout">
+            <summary>
+            Timeout for request.
+            </summary>
+            <value>Has to be greater than 5 milliseconds.<para />
+            Default value: 10 seconds.</value>
+        </member>
+        <member name="P:BetterHttpClient.ProxyManager.NumberOfAttempts">
+            <summary>
+            Set how many attempts can be made to execute request on one proxy.
+            Default value is default value is equal 4
+            </summary>
+        </member>
+        <member name="M:BetterHttpClient.ProxyManager.#ctor(System.Collections.Generic.IEnumerable{System.String},System.Boolean,BetterHttpClient.CheckService.ProxyJudgeService)">
+            <param name="proxies">Proxy list</param>
+            <param name="anonymousOnly">Set true if you want to filter proxy list and use only anonymous only</param>
+            <param name="proxyJudgeService">Proxy judge service is used to determine proxy anonymity level</param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:BetterHttpClient.ProxyManager.#ctor(System.Collections.Generic.IEnumerable{BetterHttpClient.Proxy},System.Boolean,BetterHttpClient.CheckService.ProxyJudgeService)">
+            <param name="proxies">Proxy list</param>
+            <param name="anonymousOnly">Set true if you want to filter proxy list and use only anonymous only</param>
+            <param name="proxyJudgeService">Proxy judge service is used to determine proxy anonymity level</param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:BetterHttpClient.ProxyManager.GetPage(System.String,System.String,System.Net.CookieContainer,System.Collections.Specialized.NameValueCollection)">
+            <summary>
+            Downloads url using GET.
+            </summary>
+            <param name="url">Url of webpage</param>
+            <param name="cookies">Cookies for request. Left null if you don't want to use cookies</param>
+            <param name="customHeaders">Specify custom headers for this request</param>
+            <returns></returns>
+            <exception cref="T:BetterHttpClient.WebPageNotFoundException">Page has returned 404 not found</exception>
+        </member>
+        <member name="M:BetterHttpClient.ProxyManager.PostPage(System.String,System.Collections.Specialized.NameValueCollection,System.String,System.Net.CookieContainer,System.Collections.Specialized.NameValueCollection)">
+            <summary>
+            Downloads url using POST.
+            </summary>
+            <param name="url">Url of webpage</param>
+            <param name="data">Post values</param>
+            <param name="cookies">Cookies for request. Left null if you don't want to use cookies</param>
+            <param name="customHeaders">Specify custom headers for this request</param>
+            <exception cref="T:BetterHttpClient.WebPageNotFoundException">Page has returned 404 not found</exception>
+            <returns></returns>
+        </member>
+        <member name="M:BetterHttpClient.ProxyManager.DownloadBytes(System.String,System.Collections.Specialized.NameValueCollection,System.Net.CookieContainer,System.Collections.Specialized.NameValueCollection)">
+            <summary>
+            Downloads url using POST.
+            </summary>
+            <param name="url">Url of webpage</param>
+            <param name="data">Post values</param>
+            <param name="cookies">Cookies for request. Left null if you don't want to use cookies</param>
+            <param name="customHeaders">Specify custom headers for this request</param>
+            <exception cref="T:BetterHttpClient.WebPageNotFoundException">Page has returned 404 not found</exception>
+            <returns></returns>
+        </member>
+        <member name="M:BetterHttpClient.ProxyManager.DownloadBytes(System.String,System.Net.CookieContainer,System.Collections.Specialized.NameValueCollection)">
+            <summary>
+            Downloads url using GET.
+            </summary>
+            <param name="url"></param>
+            <param name="cookies"></param>
+            <param name="customHeaders">Specify custom headers for this request</param>
+            <returns></returns>
+            <exception cref="T:BetterHttpClient.WebPageNotFoundException">Page has returned 404 not found</exception>
+        </member>
+        <member name="M:BetterHttpClient.ProxyManager.GetAvalibleProxy">
+            <summary>
+            Returns first free (but busy) and working proxy.
+            </summary>
+            <returns></returns>
+            <exception cref="T:BetterHttpClient.AllProxiesBannedException">All proxies are banned. You can't make request.</exception>
+        </member>
+        <member name="M:BetterHttpClient.ProxyManager.SetAllProxyAsOnline">
+            <summary>
+            Sets all proxies IsOnline property to true.
+            </summary>
+        </member>
+        <member name="M:BetterHttpClient.ProxyManager.GetAllProxies">
+            <summary>
+            Return all proxies
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

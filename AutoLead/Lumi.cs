@@ -18,6 +18,8 @@ using Newtonsoft.Json.Linq;
 
 namespace AutoLead
 {
+    
+
     internal class Lumi
     {
        
@@ -238,32 +240,27 @@ namespace AutoLead
 
         
 
-        public static string getCurrentLumiIP()
+        public static string getCurrentLumiIP(string ipforward, decimal portforward)
         {
 
             DateTime now = DateTime.Now;
-            int maxwait = 120;
+            int maxwait = 10;
             string response = null;
-            while (true)
+            try
             {
-                if ((DateTime.Now - now).TotalSeconds <= (double) maxwait)
-                {
+                var strUrl = "http://ip-api.com/line";
 
-                    try
-                    {
-                        var strUrl = "http://lumtest.com/myip.json";
-                        var wc = new WebClient();
-                        var strJson = wc.DownloadString(strUrl);
-                        var json = JObject.Parse(strJson);
-                        response = json["ip"].ToString();
-                        break;
+                BetterHttpClient.HttpClient wc = new BetterHttpClient.HttpClient(new BetterHttpClient.Proxy(ipforward, (int)portforward, BetterHttpClient.ProxyTypeEnum.Socks));
+                ;
+                return wc.DownloadString(strUrl);
+                //var json = JObject.Parse(strJson);
+                //response = json["ip"].ToString();
+               
 
-                    }
-                    catch (Exception e)
-                    {
-                        
-                    }
-                }
+            }
+            catch (Exception e)
+            {
+                response = e.ToString();
             }
             return response;
         }

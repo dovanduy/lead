@@ -83,7 +83,7 @@ namespace AutoLead
                     }
                     else
                     {
-                        obj = this.label1.Invoke(new MethodInvoker(() => this.label1.Text = "IP changed..."));
+                        obj = this.label1.Invoke(new MethodInvoker(() => this.label1.Text = "IP changed..." + Lumi.getCurrentLumiIP(this.ipAddressControl1.Text, this.numericUpDown1.Value)));
                         obj1 = this.button20.Invoke(new MethodInvoker(() => this.button20.Enabled = true));
                         return;
                     }
