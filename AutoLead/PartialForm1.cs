@@ -567,9 +567,7 @@ namespace AutoLead
                     }
                 }
                 if (flag)
-                {
-                    MessageBox.Show("Button Apply Click!", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
-
+                {                    
                     (new Thread(new ThreadStart(this.threadsetsock))).Start();
                 }
                 else

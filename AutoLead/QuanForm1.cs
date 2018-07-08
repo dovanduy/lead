@@ -83,7 +83,7 @@ namespace AutoLead
                                         this.listViewQuan3.Items[this.listlumiacc.IndexOf(this.lumiacc)].BackColor = Color.Red;
                                         this.listViewQuan3.Refresh();
                                     }));
-                                    this.savelumi();
+                                    //this.savelumi();
 
                                 }
                                 else
@@ -95,8 +95,11 @@ namespace AutoLead
                                         this.listViewQuan3.Refresh();
                                     }));
                                     
-                                    this.savelumi();
+                                    //this.savelumi();
                                     this.curip = Lumi.getCurrentLumiIPVer2(this.ipAddressControl1.Text, this.numericUpDown1.Value);
+
+                                    this.label1.Invoke(new MethodInvoker(() =>
+                                         this.label1.Text = "Fake Completed. IP=" + this.curip + ". Go to run offer .."));
                                     break;
                                 }
                             }
@@ -125,6 +128,7 @@ namespace AutoLead
                                 goto Label0;
                             }
                         }
+                        break;
                     }
                     else if (text == "SSH")
                     {

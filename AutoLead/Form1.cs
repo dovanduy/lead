@@ -257,9 +257,7 @@ namespace AutoLead
 										}
 										this.button23.Refresh();
 										if (this.button23.Text.Contains("Enable"))
-										{
-                                            MessageBox.Show("Change Proxy from AnalyData!", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Hand);
-
+										{                                           
                                             this.button23_Click(null, null);
 										}
 									}
